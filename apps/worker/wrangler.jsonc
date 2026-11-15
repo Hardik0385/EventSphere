@@ -15,9 +15,9 @@
     }
   ],
   "vars": {
-    "ENVIRONMENT": "development",
-    "CORS_ORIGIN": "http://localhost:5173",
-    "JWT_SECRET": "eventsphere-local-super-secret-jwt-key-minimum-32-chars-long",
+    "ENVIRONMENT": "production",
+    "CORS_ORIGIN": "https://eventsphere-web.pages.dev",
+    "JWT_SECRET": "eventsphere-super-secure-production-jwt-key-minimum-32-chars-long",
     "ADMIN_BOOTSTRAP_SECRET": "eventsphere-admin-bootstrap-dev-token"
   }
 }
