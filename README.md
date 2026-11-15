@@ -1,6 +1,16 @@
 # EventSphere – Serverless Event Management Platform
 
+[![Live Frontend Website](https://img.shields.io/badge/Live%20Demo-eventsphere--web.pages.dev-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://eventsphere-web.pages.dev)
+[![Live Edge API](https://img.shields.io/badge/Live%20API-eventsphere--api-0c8ee9?style=for-the-badge&logo=cloudflareworkers&logoColor=white)](https://eventsphere-api.hardikanilagrawal.workers.dev/api/health)
+[![Evaluation Guide](https://img.shields.io/badge/Evaluation%20Report-25%20Viva%20Q%26As-10b981?style=for-the-badge)](./docs/CLOUD_COMPUTING_EVALUATION.md)
+
 > A production-style Serverless Event Management System built on Cloudflare Workers, Pages, and D1 (Serverless Relational SQLite) for Cloud Computing laboratory demonstrations and academic evaluations.
+
+### 🌐 Live Production Links
+- **Live Frontend App:** [https://eventsphere-web.pages.dev](https://eventsphere-web.pages.dev)
+- **Live Serverless API:** [https://eventsphere-api.hardikanilagrawal.workers.dev](https://eventsphere-api.hardikanilagrawal.workers.dev)
+- **Live Edge Health Check:** [https://eventsphere-api.hardikanilagrawal.workers.dev/api/health](https://eventsphere-api.hardikanilagrawal.workers.dev/api/health)
+- **Academic Evaluation Report:** [docs/CLOUD_COMPUTING_EVALUATION.md](./docs/CLOUD_COMPUTING_EVALUATION.md)
 
 ---
 
