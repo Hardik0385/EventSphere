@@ -60,12 +60,18 @@ export const Navbar: React.FC = () => {
               >
                 Explore Events
               </Link>
-              <Link
-                to={isAuthenticated ? (user?.role === 'organizer' || user?.role === 'admin' ? '/organizer/create-event' : '/events') : '/login'}
-                className="px-3.5 py-2 rounded-xl text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-colors"
-              >
-                Host an Event
-              </Link>
+              {(user?.role === 'organizer' || user?.role === 'admin') && (
+                <Link
+                  to="/organizer/create-event"
+                  className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
+                    isActive('/organizer/create-event')
+                      ? 'text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/40'
+                      : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60'
+                  }`}
+                >
+                  Create Event
+                </Link>
+              )}
               <Link
                 to="/about"
                 className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
