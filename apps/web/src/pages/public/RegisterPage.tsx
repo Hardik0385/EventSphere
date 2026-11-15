@@ -48,9 +48,9 @@ export const RegisterPage: React.FC = () => {
         {/* Brand Header */}
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center justify-center mb-2">
-            <div className="w-10 h-10 rounded-xl bg-neutral-950 dark:bg-emerald-500/10 border border-neutral-200 dark:border-emerald-500/30 flex items-center justify-center text-emerald-500 font-black text-lg">
-              E
-            </div>
+            <span className="font-extrabold text-2xl tracking-tight text-neutral-900 dark:text-white">
+              Event<span className="text-emerald-500">Sphere</span>
+            </span>
           </Link>
           <h2 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">
             Create Your Account

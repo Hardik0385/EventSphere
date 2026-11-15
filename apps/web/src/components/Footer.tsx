@@ -9,10 +9,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Brand info */}
           <div className="space-y-4 md:col-span-2">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-neutral-950 dark:bg-emerald-500/10 border border-neutral-200 dark:border-emerald-500/30 flex items-center justify-center text-emerald-500">
-                <span className="font-black text-sm text-emerald-500">E</span>
-              </div>
+            <Link to="/" className="flex items-center">
               <span className="font-extrabold text-lg tracking-tight text-neutral-900 dark:text-white">
                 Event<span className="text-emerald-500">Sphere</span>
               </span>

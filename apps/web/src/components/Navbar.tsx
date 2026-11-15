@@ -42,10 +42,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo & Main Nav */}
           <div className="flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-xl bg-neutral-950 dark:bg-emerald-500/10 border border-neutral-300 dark:border-emerald-500/30 flex items-center justify-center text-emerald-500 group-hover:scale-105 transition-transform shadow-sm">
-                <span className="font-black text-lg text-emerald-500 tracking-tighter">E</span>
-              </div>
+            <Link to="/" className="flex items-center group">
               <span className="font-extrabold text-xl tracking-tight text-neutral-900 dark:text-white">
                 Event<span className="text-emerald-500">Sphere</span>
               </span>
