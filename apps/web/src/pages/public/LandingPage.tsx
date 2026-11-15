@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Zap, 
-  Server, 
-  Database, 
-  Globe, 
-  ShieldCheck, 
   ArrowRight, 
-  Users, 
   Calendar, 
-  QrCode, 
+  MapPin, 
+  Search,
   CheckCircle2, 
-  Layers,
-  Sparkles
+  Sparkles,
+  Ticket,
+  QrCode,
+  ShieldCheck
 } from 'lucide-react';
 import { Event } from '@eventsphere/shared';
 import { api } from '../../lib/api';
@@ -22,6 +19,7 @@ import { CardSkeleton } from '../../components/LoadingSkeleton';
 export const LandingPage: React.FC = () => {
   const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -31,7 +29,7 @@ export const LandingPage: React.FC = () => {
           setFeaturedEvents(res.data.slice(0, 3));
         }
       } catch (err) {
-        console.error('Failed to fetch featured events:', err);
+        console.error('Failed to fetch events:', err);
       } finally {
         setLoading(false);
       }
@@ -40,97 +38,102 @@ export const LandingPage: React.FC = () => {
   }, []);
 
   const categories = [
-    { name: 'Cloud Computing', count: '10+ Events', color: 'from-blue-500 to-indigo-600', icon: Server },
-    { name: 'Serverless & Edge', count: '8+ Events', color: 'from-amber-500 to-orange-600', icon: Zap },
-    { name: 'Artificial Intelligence', count: '12+ Events', color: 'from-purple-500 to-pink-600', icon: Sparkles },
-    { name: 'DevOps & Cloud', count: '6+ Events', color: 'from-emerald-500 to-teal-600', icon: Database },
+    'Tech & AI',
+    'Design & Creative',
+    'Hackathons',
+    'Conferences',
+    'Workshops',
+    'Social & Meetups',
   ];
 
   return (
     <div className="space-y-24 pb-20 overflow-hidden">
       {/* 1. Hero Section */}
-      <section className="relative pt-12 lg:pt-20">
-        {/* Glow ambient background */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-brand-500/20 via-amber-500/20 to-purple-500/20 blur-[120px] -z-10 rounded-full pointer-events-none" />
+      <section className="relative pt-16 sm:pt-24 lg:pt-32">
+        {/* Subtle light-green ambient radiance */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[320px] bg-emerald-500/10 dark:bg-emerald-500/15 blur-[130px] -z-10 rounded-full pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-          {/* Top Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-400 text-xs font-semibold shadow-sm animate-bounce">
-            <Zap className="w-3.5 h-3.5 fill-amber-500" />
-            <span>Serverless Event Management Platform</span>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+          {/* Subtle Tagline Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Discover gatherings that inspire</span>
           </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1] max-w-4xl mx-auto">
-            Discover, Register, and Host Events at the{' '}
-            <span className="bg-gradient-to-r from-brand-600 via-indigo-600 to-amber-500 bg-clip-text text-transparent">
-              Edge of the Cloud.
+          {/* Clean, Human Headline */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-neutral-900 dark:text-white tracking-tight leading-[1.08] max-w-4xl mx-auto">
+            Discover and host{' '}
+            <span className="text-emerald-500 dark:text-emerald-400">
+              exceptional events.
             </span>
           </h1>
 
           {/* Subheading */}
-          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Built entirely on Cloudflare Workers, Pages, and D1. Zero dedicated virtual machines, 
-            instant cold starts, atomic ticket registrations, and cryptographically verified QR check-ins.
+          <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            Find workshops, conferences, and community meetups happening around you. 
+            Enjoy effortless RSVPs, digital passes, and quick entry.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <Link
-              to="/events"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all hover:scale-[1.02]"
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto pt-2">
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                window.location.href = `/events${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}`;
+              }}
+              className="flex items-center gap-2 p-1.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-sm focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all"
             >
-              <span>Explore All Events</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/cloud-architecture"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm transition-all"
-            >
-              <Server className="w-4 h-4 text-amber-500" />
-              <span>Cloud Architecture Explorer</span>
-            </Link>
-          </div>
+              <div className="flex items-center flex-1 pl-3 text-neutral-400">
+                <Search className="w-4 h-4 mr-2.5 shrink-0" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search events, topics, or venues..."
+                  className="w-full bg-transparent text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none"
+                />
+              </div>
+              <button
+                type="submit"
+                className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-semibold text-xs tracking-wide transition-colors"
+              >
+                Search
+              </button>
+            </form>
 
-          {/* Stats Bar */}
-          <div className="pt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
-            <div className="p-4 rounded-2xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 backdrop-blur-md">
-              <p className="text-2xl font-black text-slate-900 dark:text-white">0 ms</p>
-              <p className="text-xs text-slate-500">Cold Start Overhead</p>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 backdrop-blur-md">
-              <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400">100%</p>
-              <p className="text-xs text-slate-500">Atomic Capacity Safety</p>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 backdrop-blur-md">
-              <p className="text-2xl font-black text-amber-600 dark:text-amber-400">300+</p>
-              <p className="text-xs text-slate-500">Cloudflare Edge Points</p>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 backdrop-blur-md">
-              <p className="text-2xl font-black text-brand-600 dark:text-brand-400">$0.00</p>
-              <p className="text-xs text-slate-500">Idle Server Infrastructure</p>
+            {/* Quick Category Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+              {categories.map((cat) => (
+                <Link
+                  key={cat}
+                  to={`/events?category=${encodeURIComponent(cat)}`}
+                  className="px-3 py-1 rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-900 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+                >
+                  {cat}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Featured Events Section */}
+      {/* 2. Upcoming Events Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex items-end justify-between mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">
-              Happening Soon
-            </span>
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
-              Featured Cloud & Tech Events
+            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              Upcoming
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mt-1">
+              Featured Events
             </h2>
           </div>
           <Link
             to="/events"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:underline"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
           >
-            <span>View all upcoming events</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>View all</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -140,175 +143,97 @@ export const LandingPage: React.FC = () => {
             <CardSkeleton />
             <CardSkeleton />
           </div>
-        ) : (
+        ) : featuredEvents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>
+        ) : (
+          <div className="text-center py-12 bg-neutral-50 dark:bg-neutral-900/50 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+            <p className="text-sm text-neutral-500">No events scheduled at the moment.</p>
+          </div>
         )}
       </section>
 
-      {/* 3. Event Categories */}
+      {/* 3. Simple 3-Step Journey */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto mb-10">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-            Browse by Focus Area
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            Simple & Seamless
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mt-1">
+            How EventSphere Works
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-            Find the right hackathons, workshops, and symposiums tailored to your academic and technical goals.
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-2">
+            Everything you need for an effortless event experience, whether attending or hosting.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {categories.map((cat, idx) => {
-            const Icon = cat.icon;
-            return (
-              <Link
-                key={idx}
-                to={`/events?category=${encodeURIComponent(cat.name)}`}
-                className="group relative p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-500/50 shadow-sm hover:shadow-lg transition-all duration-300"
-              >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${cat.color} text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-md`}>
-                  <Icon className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-                  {cat.name}
-                </h3>
-                <p className="text-xs text-slate-500 mt-1">{cat.count}</p>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 4. Platform Features */}
-      <section className="bg-slate-100/70 dark:bg-slate-900/50 py-16 border-y border-slate-200 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-              Engineered for Scalability
-            </span>
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
-              Why Serverless Changes Event Operations
-            </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-              Say goodbye to overloaded Apache/Nginx web servers crashing during high-demand student registrations.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-7 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500/40 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-5 font-bold text-sm">
+              01
+            </div>
+            <h3 className="text-base font-bold text-neutral-900 dark:text-white mb-2">
+              Discover Events
+            </h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Explore curated workshops, hackathons, and conferences with live seat counts and venue schedules.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-5">
-                <Users className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                Atomic Seat Allocations
-              </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Database-level transactional constraints prevent race conditions and overbooking even when hundreds of students click register simultaneously on the final remaining seat.
-              </p>
+          <div className="p-7 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500/40 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-5 font-bold text-sm">
+              02
             </div>
-
-            <div className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5">
-                <QrCode className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                Cryptographic QR Tickets
-              </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Each confirmed attendee receives an opaque, tamper-evident digital ticket with a verifiable QR code. Organizers verify attendance on-site with duplicate check-in prevention.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-5">
-                <Layers className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                Real-Time Edge Analytics
-              </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Real database aggregations compute capacity utilization, attendance percentages, and registration timelines for organizers and platform administrators in sub-10 milliseconds.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. How It Works Workflow */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">
-            Intuitive Lifecycle
-          </span>
-          <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
-            How EventSphere Works
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            <div className="w-10 h-10 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
-              1
-            </div>
-            <h4 className="font-bold text-base mb-1">Discover Event</h4>
-            <p className="text-xs text-slate-500">Browse categories, view venue info, dates, and live seat counts.</p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            <div className="w-10 h-10 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
-              2
-            </div>
-            <h4 className="font-bold text-base mb-1">1-Click Register</h4>
-            <p className="text-xs text-slate-500">Cloudflare Worker authenticates token and books atomic seat in D1.</p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            <div className="w-10 h-10 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
-              3
-            </div>
-            <h4 className="font-bold text-base mb-1">Get Digital Ticket</h4>
-            <p className="text-xs text-slate-500">Receive an interactive digital ticket with downloadable QR code.</p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            <div className="w-10 h-10 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
-              4
-            </div>
-            <h4 className="font-bold text-base mb-1">Gate Check-In</h4>
-            <p className="text-xs text-slate-500">Organizer scans QR code or enters code to verify and admit attendee.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Serverless Technology Highlights */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white border border-slate-800 relative overflow-hidden">
-          <div className="relative z-10 max-w-3xl space-y-6">
-            <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-semibold">
-              Cloud Computing Course Project
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Demonstrating Modern Cloud Architecture
-            </h2>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Explore our interactive demonstration module with live health checks, on-the-fly edge query timings, 
-              and comprehensive explanations of IaaS, PaaS, SaaS, and FaaS models.
+            <h3 className="text-base font-bold text-neutral-900 dark:text-white mb-2">
+              Instant RSVP
+            </h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Reserve your spot with a single click. Your ticket is confirmed instantly with guaranteed capacity.
             </p>
+          </div>
 
-            <div className="flex flex-wrap gap-4 pt-2">
+          <div className="p-7 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500/40 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-5 font-bold text-sm">
+              03
+            </div>
+            <h3 className="text-base font-bold text-neutral-900 dark:text-white mb-2">
+              One-Scan Entry
+            </h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Present your personalized digital ticket pass at the venue entrance for smooth, contactless entry.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Host an Event CTA Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="p-8 sm:p-12 rounded-3xl bg-neutral-950 dark:bg-neutral-900 border border-neutral-800 text-white relative overflow-hidden">
+          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-emerald-500/10 blur-[100px] pointer-events-none" />
+          <div className="relative z-10 max-w-2xl space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+              For Organizers & Creators
+            </p>
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+              Ready to host your next gathering?
+            </h2>
+            <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
+              Create your event page in minutes, publish tickets, and monitor registrations in real-time.
+            </p>
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <Link
-                to="/cloud-architecture"
-                className="px-6 py-3 rounded-xl font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md transition-all flex items-center gap-2"
+                to="/organizer/create-event"
+                className="px-6 py-3 rounded-xl font-bold bg-emerald-500 hover:bg-emerald-400 text-neutral-950 shadow-md transition-colors text-sm inline-flex items-center gap-2"
               >
-                <span>Launch Cloud Service Explorer</span>
+                <span>Create an Event</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/events"
-                className="px-6 py-3 rounded-xl font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
+                className="px-6 py-3 rounded-xl font-semibold bg-neutral-800 hover:bg-neutral-700 text-white transition-colors text-sm"
               >
                 Browse Events
               </Link>

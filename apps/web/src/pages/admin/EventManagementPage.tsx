@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Trash2, ArrowLeft, Search, ExternalLink, Users } from 'lucide-react';
-import { Event } from '@eventsphere/shared';
+import { Calendar, Trash2, ArrowLeft, Search } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useToast } from '../../context/ToastContext';
 import { TableSkeleton } from '../../components/LoadingSkeleton';
@@ -70,37 +69,37 @@ export const EventManagementPage: React.FC = () => {
       <div>
         <Link
           to="/admin/dashboard"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-2"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors mb-2"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Admin Console
         </Link>
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Platform-Wide Event Governance
+        <h1 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
+          Event Governance & Moderation
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
-          Monitor all published events across all organizers and purge inappropriate postings.
+        <p className="text-xs text-neutral-500 mt-1">
+          Monitor all published events and moderate listings across the platform.
         </p>
       </div>
 
       {/* Search Bar */}
       <div className="relative max-w-sm">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by title, organizer, or category..."
-          className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-white shadow-sm"
+          className="w-full pl-10 pr-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#121215] text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/40 text-neutral-900 dark:text-white transition-colors shadow-sm"
         />
       </div>
 
       {loading ? (
         <TableSkeleton rows={6} />
       ) : (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 rounded-3xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 font-semibold">
+              <thead className="bg-neutral-50 dark:bg-neutral-900/60 text-neutral-500 uppercase tracking-wider border-b border-neutral-200 dark:border-neutral-800 font-semibold">
                 <tr>
                   <th className="py-4 px-6">Event</th>
                   <th className="py-4 px-6">Organizer</th>
@@ -110,26 +109,26 @@ export const EventManagementPage: React.FC = () => {
                   <th className="py-4 px-6 text-right">Moderation</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+              <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-700 dark:text-neutral-300">
                 {filtered.map((evt) => (
-                  <tr key={evt.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                  <tr key={evt.id} className="hover:bg-neutral-50/50 dark:hover:bg-neutral-800/40 transition-colors">
                     <td className="py-4 px-6">
                       <Link
                         to={`/events/${evt.id}`}
-                        className="font-bold text-sm text-slate-900 dark:text-white hover:text-brand-600 transition-colors block line-clamp-1"
+                        className="font-bold text-sm text-neutral-900 dark:text-white hover:text-emerald-500 transition-colors block line-clamp-1"
                       >
                         {evt.title}
                       </Link>
-                      <span className="text-[10px] text-slate-400">ID: {evt.id}</span>
+                      <span className="text-[10px] text-neutral-400">ID: {evt.id}</span>
                     </td>
 
                     <td className="py-4 px-6">
-                      <p className="font-semibold text-slate-800 dark:text-slate-200">{evt.organizer_name}</p>
-                      <p className="text-[10px] text-slate-400">{evt.organizer_email}</p>
+                      <p className="font-semibold text-neutral-800 dark:text-neutral-200">{evt.organizer_name}</p>
+                      <p className="text-[10px] text-neutral-400">{evt.organizer_email}</p>
                     </td>
 
                     <td className="py-4 px-6">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 dark:bg-slate-800">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300">
                         {evt.category}
                       </span>
                     </td>
@@ -165,7 +164,7 @@ export const EventManagementPage: React.FC = () => {
         title="Admin Purge Event?"
         message={`Are you sure you want to delete "${selectedEvent?.title}"? As an administrator, this will remove the event, registrations, and tickets platform-wide.`}
         confirmLabel="Confirm Purge"
-        isDestructive={true}
+        confirmVariant="danger"
         isLoading={deleting}
         onConfirm={confirmDelete}
         onCancel={() => setDeleteModalOpen(false)}

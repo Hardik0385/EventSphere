@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Lock, Mail, Shield, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { User, Lock } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { api } from '../../lib/api';
@@ -68,30 +68,30 @@ export const ProfileSettingsPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <div>
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Profile & Security Settings
+        <h1 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
+          Account Settings
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
-          Manage your account credentials and personal preferences.
+        <p className="text-xs text-neutral-500 mt-1">
+          Manage your personal information and login credentials.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Profile Card */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
               <User className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-bold text-base text-slate-900 dark:text-white">Profile Information</h2>
-              <p className="text-xs text-slate-500">Update your account name</p>
+              <h2 className="font-bold text-base text-neutral-900 dark:text-white">Profile Information</h2>
+              <p className="text-xs text-neutral-500">Update your display name</p>
             </div>
           </div>
 
           <form onSubmit={handleUpdateProfile} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
                 Full Name
               </label>
               <input
@@ -99,28 +99,27 @@ export const ProfileSettingsPage: React.FC = () => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-white"
+                className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/40 text-neutral-900 dark:text-white transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
                 Email Address
               </label>
               <input
                 type="email"
                 disabled
                 value={user?.email || ''}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/40 text-sm text-slate-500 cursor-not-allowed"
+                className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900/50 text-sm text-neutral-500 cursor-not-allowed"
               />
-              <p className="text-[10px] text-slate-400 mt-1">Email is permanent for security isolation.</p>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                Current Role
+              <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
+                Account Type
               </label>
-              <span className="inline-block px-3 py-1 rounded-md bg-brand-50 dark:bg-brand-950 text-brand-700 dark:text-brand-300 text-xs font-bold uppercase">
+              <span className="inline-block px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/80 text-xs font-bold uppercase tracking-wider">
                 {user?.role}
               </span>
             </div>
@@ -128,7 +127,7 @@ export const ProfileSettingsPage: React.FC = () => {
             <button
               type="submit"
               disabled={updatingProfile}
-              className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-sm transition-all"
+              className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-neutral-950 bg-emerald-500 hover:bg-emerald-400 shadow-sm transition-colors disabled:opacity-50"
             >
               {updatingProfile ? 'Saving...' : 'Save Profile Changes'}
             </button>
@@ -136,20 +135,20 @@ export const ProfileSettingsPage: React.FC = () => {
         </div>
 
         {/* Change Password Card */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
               <Lock className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-bold text-base text-slate-900 dark:text-white">Security & Password</h2>
-              <p className="text-xs text-slate-500">Web Crypto PBKDF2 protected</p>
+              <h2 className="font-bold text-base text-neutral-900 dark:text-white">Security & Password</h2>
+              <p className="text-xs text-neutral-500">Update your login password</p>
             </div>
           </div>
 
           <form onSubmit={handleChangePassword} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
                 Current Password
               </label>
               <input
@@ -158,12 +157,12 @@ export const ProfileSettingsPage: React.FC = () => {
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-white"
+                className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/40 text-neutral-900 dark:text-white transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
                 New Password (min 8 chars)
               </label>
               <input
@@ -173,12 +172,12 @@ export const ProfileSettingsPage: React.FC = () => {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-white"
+                className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/40 text-neutral-900 dark:text-white transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
                 Confirm New Password
               </label>
               <input
@@ -188,16 +187,16 @@ export const ProfileSettingsPage: React.FC = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-white"
+                className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/40 text-neutral-900 dark:text-white transition-colors"
               />
             </div>
 
             <button
               type="submit"
               disabled={updatingPassword}
-              className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-sm"
+              className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-neutral-800 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors shadow-sm disabled:opacity-50"
             >
-              {updatingPassword ? 'Rehashing Password...' : 'Update Password'}
+              {updatingPassword ? 'Updating Password...' : 'Update Password'}
             </button>
           </form>
         </div>

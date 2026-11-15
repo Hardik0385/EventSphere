@@ -1,112 +1,86 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Server, Database, Globe, ShieldCheck, CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ArrowUpRight, Calendar, Users, Ticket, ShieldCheck } from 'lucide-react';
 
 export const AboutPage: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
       {/* Header */}
-      <div className="text-center space-y-3">
-        <span className="px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 border border-brand-200 dark:border-brand-800 text-xs font-semibold">
-          Cloud Computing Evaluation Project
-        </span>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+      <div className="text-center space-y-4">
+        <span className="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/80 text-xs font-semibold">
           About EventSphere
+        </span>
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
+          Connecting communities through memorable events.
         </h1>
-        <p className="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-          Demonstrating serverless cloud computing principles, managed SQLite at the edge, and zero-server infrastructure.
+        <p className="text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+          EventSphere is a modern platform crafted to make discovering, hosting, and ticketing gatherings effortless for attendees and organizers alike.
         </p>
       </div>
 
-      {/* Problem Statement Card */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm space-y-4">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <Zap className="w-5 h-5 text-amber-500" />
-          The Problem Statement
-        </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-          Traditional event registration and ticketing platforms rely heavily on dedicated, always-running servers (e.g., standard Node/Express, Apache, or EC2 instances). These systems suffer from severe drawbacks:
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 text-xs text-slate-600 dark:text-slate-300">
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-1">
-            <p className="font-bold text-rose-600 dark:text-rose-400">🚨 High Idle Costs</p>
-            <p>Servers run 24/7 consuming electricity and compute budget even when no registrations are occurring.</p>
+      {/* Core Values / Features */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="p-7 rounded-2xl bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 shadow-sm">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4">
+            <Ticket className="w-5 h-5" />
           </div>
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-1">
-            <p className="font-bold text-rose-600 dark:text-rose-400">💥 Registration Spikes Crash</p>
-            <p>Flash registrations (e.g., popular hackathons) overwhelm single-instance application servers.</p>
+          <h3 className="text-base font-bold text-neutral-900 dark:text-white mb-2">
+            Instant RSVP & Passes
+          </h3>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Register in seconds. Attendees receive guaranteed digital entry passes with verified QR codes ready for check-in.
+          </p>
+        </div>
+
+        <div className="p-7 rounded-2xl bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 shadow-sm">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4">
+            <Users className="w-5 h-5" />
           </div>
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-1">
-            <p className="font-bold text-rose-600 dark:text-rose-400">🔧 Maintenance Overhead</p>
-            <p>OS patching, security updates, firewall rules, and reverse proxies require continuous human maintenance.</p>
+          <h3 className="text-base font-bold text-neutral-900 dark:text-white mb-2">
+            Empowered Organizers
+          </h3>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Create events, manage capacity thresholds, inspect registrations, and view real-time attendee statistics.
+          </p>
+        </div>
+
+        <div className="p-7 rounded-2xl bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 shadow-sm">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4">
+            <ShieldCheck className="w-5 h-5" />
           </div>
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 space-y-1">
-            <p className="font-bold text-rose-600 dark:text-rose-400">🌐 Latency Penalties</p>
-            <p>Centralized servers in one region suffer high round-trip latency for global or remote participants.</p>
-          </div>
+          <h3 className="text-base font-bold text-neutral-900 dark:text-white mb-2">
+            No Double-Bookings
+          </h3>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Strict transactional capacity controls ensure you never oversell a venue, even during high-traffic registration rushes.
+          </p>
         </div>
       </div>
 
-      {/* Cloudflare Serverless Solution */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm space-y-6">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <Server className="w-5 h-5 text-brand-500" />
-          The Serverless Cloud Solution
-        </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-          EventSphere eliminates dedicated application servers by operating directly on Cloudflare’s global edge network:
-        </p>
-
-        <div className="space-y-4">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
-              <Server className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Cloudflare Workers (FaaS)</h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                On-demand micro-function isolates spin up in less than 5 milliseconds to handle requests without persistent container management.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-              <Database className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Cloudflare D1 (Serverless SQLite)</h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                Relational SQL storage co-located with serverless workers, supporting ACID transactions, strict capacity locking, and automatic replication.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
-              <Globe className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Cloudflare Pages (Global CDN)</h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                Modern client-side single page app built with React, Vite, and Tailwind CSS cached across 300+ edge data centers.
-              </p>
-            </div>
-          </div>
+      {/* Subtle Technical / Evaluation Note */}
+      <div className="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 className="text-sm font-bold text-neutral-900 dark:text-white">Under the Hood</h4>
+          <p className="text-xs text-neutral-500 mt-0.5">
+            EventSphere is powered by globally distributed edge compute with zero dedicated server overhead.
+          </p>
         </div>
-      </div>
-
-      {/* CTA to Demonstration */}
-      <div className="text-center p-8 rounded-3xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white space-y-4">
-        <h3 className="text-2xl font-bold">Ready to see the Cloud Architecture in Action?</h3>
-        <p className="text-sm text-brand-100 max-w-lg mx-auto">
-          Explore our interactive cloud module which lets you execute live edge API queries, measure browser latency, and test capacity enforcement.
-        </p>
         <Link
           to="/cloud-architecture"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-slate-900 font-bold hover:bg-slate-100 transition-colors shadow-lg"
+          className="px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-emerald-500/50 transition-colors flex items-center gap-1.5 shrink-0"
         >
-          <span>Open Cloud Service Explorer</span>
+          <span>Architecture Explorer</span>
+          <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+        </Link>
+      </div>
+
+      {/* CTA */}
+      <div className="text-center pt-4">
+        <Link
+          to="/events"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-bold text-sm shadow-md transition-colors"
+        >
+          <span>Explore Upcoming Events</span>
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>

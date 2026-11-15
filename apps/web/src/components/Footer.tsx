@@ -1,88 +1,89 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Server, ShieldCheck, Database, Globe } from 'lucide-react';
+import { Calendar, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-900 text-slate-300 border-t border-slate-800 transition-colors">
+    <footer className="bg-white dark:bg-[#09090b] text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-800/80 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Brand info */}
           <div className="space-y-4 md:col-span-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-500 to-amber-500 flex items-center justify-center text-white">
-                <Zap className="w-4 h-4 fill-white" />
+            <Link to="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-neutral-950 dark:bg-emerald-500/10 border border-neutral-200 dark:border-emerald-500/30 flex items-center justify-center text-emerald-500">
+                <span className="font-black text-sm text-emerald-500">E</span>
               </div>
-              <span className="font-extrabold text-lg tracking-tight text-white">
-                EventSphere
+              <span className="font-extrabold text-lg tracking-tight text-neutral-900 dark:text-white">
+                Event<span className="text-emerald-500">Sphere</span>
               </span>
-              <span className="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
-                Cloud Computing Project
-              </span>
-            </div>
-            <p className="text-sm text-slate-400 max-w-md">
-              A high-performance Serverless Event Management Platform built to demonstrate 
-              FaaS (Cloudflare Workers), Edge Data Storage (Cloudflare D1), and global static distribution (Cloudflare Pages).
+            </Link>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-sm leading-relaxed">
+              Discover and host exceptional gatherings. Fast, reliable ticketing, digital entry passes, and real-time attendance tools for modern organizers.
             </p>
-            <div className="flex flex-wrap gap-2 pt-2 text-xs text-slate-400">
-              <span className="flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md">
-                <Server className="w-3.5 h-3.5 text-amber-400" /> Cloudflare Workers
-              </span>
-              <span className="flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md">
-                <Database className="w-3.5 h-3.5 text-blue-400" /> Cloudflare D1
-              </span>
-              <span className="flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md">
-                <Globe className="w-3.5 h-3.5 text-emerald-400" /> Cloudflare Pages
-              </span>
-            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-white tracking-wider uppercase mb-3">Explore</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3.5">
+              Explore
+            </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/events" className="hover:text-amber-400 transition-colors">Browse Events</Link>
-              </li>
-              <li>
-                <Link to="/cloud-architecture" className="hover:text-amber-400 transition-colors flex items-center gap-1">
-                  Cloud Explorer <span className="text-[10px] bg-amber-500/20 text-amber-300 px-1 rounded">Live Demo</span>
+                <Link to="/events" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  Upcoming Events
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-amber-400 transition-colors">About Architecture</Link>
+                <Link to="/about" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  About EventSphere
+                </Link>
               </li>
               <li>
-                <Link to="/login" className="hover:text-amber-400 transition-colors">Sign In</Link>
+                <Link to="/login" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  Sign In
+                </Link>
+              </li>
+              <li>
+                <Link to="/register" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  Create Account
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Cloud Computing Concepts */}
+          {/* Host & Platform */}
           <div>
-            <h4 className="text-sm font-semibold text-white tracking-wider uppercase mb-3">Cloud Principles</h4>
-            <ul className="space-y-2 text-sm text-slate-400">
-              <li className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" /> Zero Dedicated Servers
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3.5">
+              For Organizers
+            </h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/organizer/create-event" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  Host an Event
+                </Link>
               </li>
-              <li className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" /> Atomic Edge Registrations
+              <li>
+                <Link to="/organizer/dashboard" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  Organizer Dashboard
+                </Link>
               </li>
-              <li className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" /> Cryptographic QR Tickets
-              </li>
-              <li className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" /> Cloudflare Free Tier
+              <li>
+                <Link to="/cloud-architecture" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1">
+                  Architecture Overview <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 EventSphere – University Cloud Computing Laboratory Project.</p>
-          <p className="flex items-center gap-1">
-            Built with React, Vite, TypeScript, Hono & Cloudflare D1
-          </p>
+        <div className="pt-8 border-t border-neutral-100 dark:border-neutral-800/80 text-xs text-neutral-400 dark:text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>© {new Date().getFullYear()} EventSphere. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              All Systems Operational
+            </span>
+          </div>
         </div>
       </div>
     </footer>

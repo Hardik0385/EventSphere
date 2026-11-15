@@ -1,37 +1,44 @@
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon, Calendar } from 'lucide-react';
 
 interface EmptyStateProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
   title: string;
   description: string;
   action?: {
     label: string;
     onClick: () => void;
   };
+  actionLabel?: string;
+  onAction?: () => void;
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
-  icon: Icon,
+  icon: Icon = Calendar,
   title,
   description,
   action,
+  actionLabel,
+  onAction,
 }) => {
+  const finalActionLabel = action?.label || actionLabel;
+  const finalActionHandler = action?.onClick || onAction;
+
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-4 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl bg-slate-50/50 dark:bg-slate-900/50">
-      <div className="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-4">
-        <Icon className="w-7 h-7" />
+    <div className="flex flex-col items-center justify-center py-16 px-4 text-center border border-dashed border-neutral-200 dark:border-neutral-800 rounded-3xl bg-neutral-50/50 dark:bg-[#121215]/50">
+      <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+        <Icon className="w-6 h-6" />
       </div>
-      <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1.5">{title}</h3>
-      <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mb-6 leading-relaxed">
+      <h3 className="text-base font-bold text-neutral-900 dark:text-white mb-1">{title}</h3>
+      <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-sm mb-6 leading-relaxed">
         {description}
       </p>
-      {action && (
+      {finalActionLabel && finalActionHandler && (
         <button
-          onClick={action.onClick}
-          className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-sm shadow-brand-500/20 transition-all"
+          onClick={finalActionHandler}
+          className="px-5 py-2.5 rounded-xl text-xs font-bold text-neutral-950 bg-emerald-500 hover:bg-emerald-400 shadow-sm transition-colors"
         >
-          {action.label}
+          {finalActionLabel}
         </button>
       )}
     </div>

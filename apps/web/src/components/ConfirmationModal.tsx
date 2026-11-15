@@ -8,6 +8,7 @@ interface ConfirmationModalProps {
   confirmLabel?: string;
   cancelLabel?: string;
   isDestructive?: boolean;
+  confirmVariant?: 'primary' | 'danger';
   isLoading?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -20,19 +21,22 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   confirmLabel = 'Confirm',
   cancelLabel = 'Cancel',
   isDestructive = false,
+  confirmVariant,
   isLoading = false,
   onConfirm,
   onCancel,
 }) => {
   if (!isOpen) return null;
 
+  const isDanger = isDestructive || confirmVariant === 'danger';
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in">
-      <div className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-in zoom-in-95">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-md bg-white dark:bg-[#121215] rounded-3xl p-6 shadow-2xl border border-neutral-200 dark:border-neutral-800">
         <button
           onClick={onCancel}
           disabled={isLoading}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+          className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
         >
           <X className="w-5 h-5" />
         </button>
@@ -40,38 +44,40 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         <div className="flex items-center gap-3.5 mb-4">
           <div
             className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-              isDestructive
-                ? 'bg-rose-100 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400'
-                : 'bg-amber-100 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400'
+              isDanger
+                ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400'
+                : 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400'
             }`}
           >
             <AlertTriangle className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">{title}</h3>
-            <p className="text-xs text-slate-500">Please review before proceeding</p>
+            <h3 className="text-base font-bold text-neutral-900 dark:text-white">{title}</h3>
+            <p className="text-xs text-neutral-500">Please review before confirming</p>
           </div>
         </div>
 
-        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+        <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
           {message}
         </p>
 
         <div className="flex items-center justify-end gap-3">
           <button
+            type="button"
             onClick={onCancel}
             disabled={isLoading}
-            className="px-4 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="px-4 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
           >
             {cancelLabel}
           </button>
           <button
+            type="button"
             onClick={onConfirm}
             disabled={isLoading}
-            className={`px-5 py-2.5 rounded-xl text-sm font-semibold text-white shadow-sm transition-all ${
-              isDestructive
-                ? 'bg-rose-600 hover:bg-rose-500 shadow-rose-500/20'
-                : 'bg-brand-600 hover:bg-brand-500 shadow-brand-500/20'
+            className={`px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm ${
+              isDanger
+                ? 'bg-rose-600 hover:bg-rose-500 text-white'
+                : 'bg-emerald-500 hover:bg-emerald-400 text-neutral-950'
             }`}
           >
             {isLoading ? 'Processing...' : confirmLabel}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Ticket, Calendar, CheckCircle2, ArrowRight, Clock, MapPin, Sparkles } from 'lucide-react';
+import { Ticket, Calendar, CheckCircle2, ArrowRight, Clock, MapPin } from 'lucide-react';
 import { Registration } from '@eventsphere/shared';
 import { api } from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
@@ -34,22 +34,23 @@ export const ParticipantDashboardPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-brand-600 via-indigo-600 to-amber-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-2">
-            <Sparkles className="w-3.5 h-3.5" /> Participant Dashboard
+      <div className="bg-neutral-950 dark:bg-[#121215] border border-neutral-800 rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm">
+        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-emerald-500/10 blur-[90px] pointer-events-none" />
+        <div className="relative z-10">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-3">
+            Attendee Dashboard
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
             Welcome back, {user?.name}!
           </h1>
-          <p className="text-sm text-brand-100 mt-1 max-w-xl">
-            You are currently enrolled in {confirmedRegistrations.length} upcoming events. Present your digital tickets at the venue for instant check-in.
+          <p className="text-sm text-neutral-400 mt-1 max-w-xl">
+            You are currently enrolled in {confirmedRegistrations.length} upcoming events.
           </p>
         </div>
 
         <Link
           to="/events"
-          className="self-start md:self-auto px-5 py-2.5 rounded-xl bg-white text-slate-900 font-bold text-xs hover:bg-slate-100 transition-all shadow-md flex items-center gap-2"
+          className="self-start md:self-auto px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-bold text-xs transition-colors flex items-center gap-2 shadow-sm"
         >
           <span>Browse More Events</span>
           <ArrowRight className="w-4 h-4" />
@@ -61,47 +62,43 @@ export const ParticipantDashboardPage: React.FC = () => {
         <StatsSkeleton />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="flex items-center justify-between text-slate-500 mb-2">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 shadow-sm">
+            <div className="flex items-center justify-between text-neutral-500 mb-2">
               <span className="text-xs font-semibold uppercase tracking-wider">Active Registrations</span>
-              <Ticket className="w-5 h-5 text-brand-500" />
+              <Ticket className="w-5 h-5 text-emerald-500" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">{confirmedRegistrations.length}</p>
-            <p className="text-xs text-slate-500 mt-1">Confirmed event seats reserved</p>
+            <p className="text-3xl font-black text-neutral-900 dark:text-white">{confirmedRegistrations.length}</p>
+            <p className="text-xs text-neutral-500 mt-1">Confirmed event seats reserved</p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="flex items-center justify-between text-slate-500 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Total Events Attended</span>
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 shadow-sm">
+            <div className="flex items-center justify-between text-neutral-500 mb-2">
+              <span className="text-xs font-semibold uppercase tracking-wider">Events Attended</span>
               <CheckCircle2 className="w-5 h-5 text-emerald-500" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white">{checkedInCount}</p>
-            <p className="text-xs text-slate-500 mt-1">Verified on-site check-ins</p>
+            <p className="text-3xl font-black text-neutral-900 dark:text-white">{checkedInCount}</p>
+            <p className="text-xs text-neutral-500 mt-1">Verified on-site check-ins</p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="flex items-center justify-between text-slate-500 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Account Role</span>
-              <Calendar className="w-5 h-5 text-purple-500" />
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 shadow-sm">
+            <div className="flex items-center justify-between text-neutral-500 mb-2">
+              <span className="text-xs font-semibold uppercase tracking-wider">Pass Status</span>
+              <Calendar className="w-5 h-5 text-emerald-500" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white capitalize">{user?.role}</p>
-            <p className="text-xs text-slate-500 mt-1">Authorized for participant actions</p>
+            <p className="text-3xl font-black text-neutral-900 dark:text-white">Active</p>
+            <p className="text-xs text-neutral-500 mt-1">All digital passes ready</p>
           </div>
         </div>
       )}
 
-      {/* Recent Registrations Section */}
+      {/* Upcoming Registered Events */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-            My Registered Events
+          <h2 className="text-xl font-bold text-neutral-900 dark:text-white">
+            My Enrolled Events
           </h2>
-          <Link
-            to="/my-registrations"
-            className="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1"
-          >
-            <span>View All Registrations</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+          <Link to="/my-tickets" className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">
+            View All Tickets
           </Link>
         </div>
 
@@ -110,80 +107,62 @@ export const ParticipantDashboardPage: React.FC = () => {
             <CardSkeleton />
             <CardSkeleton />
           </div>
-        ) : confirmedRegistrations.length === 0 ? (
-          <EmptyState
-            icon={Ticket}
-            title="No registrations yet"
-            description="You haven't registered for any events yet. Explore upcoming hackathons and workshops to get your tickets!"
-            action={{
-              label: 'Discover Events',
-              onClick: () => (window.location.href = '/events'),
-            }}
-          />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {confirmedRegistrations.slice(0, 4).map((reg) => (
+        ) : confirmedRegistrations.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {confirmedRegistrations.map((reg) => (
               <div
                 key={reg.id}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4 flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 flex flex-col justify-between gap-4 hover:border-emerald-500/40 transition-colors shadow-sm"
               >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300">
-                      {reg.event_category || 'Event'}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/80">
+                      Confirmed
                     </span>
-                    {reg.checked_in_at ? (
-                      <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">
-                        ✓ Checked In
-                      </span>
-                    ) : (
-                      <span className="text-[11px] font-medium text-amber-600 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full">
-                        Confirmed Seat
-                      </span>
-                    )}
+                    <span className="text-[11px] font-mono font-bold text-neutral-400">
+                      {reg.ticket_code}
+                    </span>
                   </div>
-
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white line-clamp-1 mb-2">
+                  <h3 className="text-base font-bold text-neutral-900 dark:text-white">
                     {reg.event_title}
                   </h3>
-
-                  <div className="text-xs text-slate-500 space-y-1">
-                    {reg.event_start_time && (
-                      <p className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-brand-500" />
-                        {new Date(reg.event_start_time).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </p>
-                    )}
-                    {reg.event_location && (
-                      <p className="flex items-center gap-1.5 truncate">
-                        <MapPin className="w-3.5 h-3.5 text-brand-500 shrink-0" />
-                        {reg.event_location}
-                      </p>
-                    )}
+                  <div className="space-y-1 text-xs text-neutral-500">
+                    <p className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-emerald-500" />
+                      {reg.event_start_time ? new Date(reg.event_start_time).toLocaleDateString() : 'Date TBA'}
+                    </p>
+                    <p className="flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-emerald-500" />
+                      {reg.event_location || 'Venue TBA'}
+                    </p>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-slate-700 dark:text-slate-300">
-                    {reg.ticket_code}
-                  </span>
+                <div className="pt-3 border-t border-neutral-100 dark:border-neutral-800/80 flex items-center justify-between">
                   <Link
-                    to={`/my-tickets`}
-                    className="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1"
+                    to={`/events/${reg.event_id}`}
+                    className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
                   >
-                    <span>View QR Ticket</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    Event Details
+                  </Link>
+                  <Link
+                    to="/my-tickets"
+                    className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-emerald-500 hover:text-neutral-950 text-neutral-800 dark:text-neutral-200 font-semibold text-xs transition-colors flex items-center gap-1.5"
+                  >
+                    <Ticket className="w-3.5 h-3.5" />
+                    <span>Show Pass</span>
                   </Link>
                 </div>
               </div>
             ))}
           </div>
+        ) : (
+          <EmptyState
+            title="No event registrations yet"
+            description="You have not registered for any events yet. Check out upcoming events and reserve your pass."
+            actionLabel="Discover Events"
+            onAction={() => window.location.href = '/events'}
+          />
         )}
       </div>
     </div>

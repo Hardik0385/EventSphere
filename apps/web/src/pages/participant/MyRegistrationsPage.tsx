@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Ticket, Calendar, Clock, MapPin, XCircle, QrCode, AlertCircle, ArrowLeft } from 'lucide-react';
+import { Ticket, Calendar, Clock, MapPin, XCircle, QrCode, ArrowLeft } from 'lucide-react';
 import { Registration } from '@eventsphere/shared';
 import { api } from '../../lib/api';
 import { useToast } from '../../context/ToastContext';
@@ -51,7 +51,7 @@ export const MyRegistrationsPage: React.FC = () => {
     try {
       const res = await api.delete(`/api/registrations/${selectedReg.id}`);
       if (res.success) {
-        success('Registration cancelled successfully. Seat has been freed.');
+        success('Registration cancelled successfully. Seat has been released.');
         setCancelModalOpen(false);
         fetchRegistrations();
       }
@@ -73,21 +73,21 @@ export const MyRegistrationsPage: React.FC = () => {
         <div>
           <Link
             to="/dashboard"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-2"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors mb-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Back to Dashboard
           </Link>
-          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
             My Event Registrations
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Manage your booked seats, view tickets, or cancel attendance.
+          <p className="text-xs text-neutral-500 mt-1">
+            Manage your booked seats, view passes, or cancel attendance.
           </p>
         </div>
 
         <Link
           to="/events"
-          className="self-start sm:self-auto px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold transition-all shadow-sm"
+          className="self-start sm:self-auto px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-950 text-xs font-bold transition-colors shadow-sm"
         >
           Explore More Events
         </Link>
@@ -99,17 +99,15 @@ export const MyRegistrationsPage: React.FC = () => {
         <EmptyState
           icon={Ticket}
           title="No registrations found"
-          description="You haven't signed up for any events yet. Check out the upcoming cloud hackathons and tech talks!"
-          action={{
-            label: 'Browse Events',
-            onClick: () => (window.location.href = '/events'),
-          }}
+          description="You haven't signed up for any events yet. Check out upcoming gatherings and reserve your pass."
+          actionLabel="Browse Events"
+          onAction={() => (window.location.href = '/events')}
         />
       ) : (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 rounded-3xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 font-semibold">
+              <thead className="bg-neutral-50 dark:bg-neutral-900/60 text-neutral-500 uppercase tracking-wider border-b border-neutral-200 dark:border-neutral-800 font-semibold">
                 <tr>
                   <th className="py-4 px-6">Event</th>
                   <th className="py-4 px-6">Ticket Code</th>
@@ -118,30 +116,30 @@ export const MyRegistrationsPage: React.FC = () => {
                   <th className="py-4 px-6 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+              <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-700 dark:text-neutral-300">
                 {registrations.map((reg) => {
                   const isCancelled = reg.registration_status === 'cancelled';
                   const isCheckedIn = Boolean(reg.checked_in_at);
 
                   return (
-                    <tr key={reg.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                    <tr key={reg.id} className="hover:bg-neutral-50/50 dark:hover:bg-neutral-800/40 transition-colors">
                       <td className="py-4 px-6">
                         <Link
                           to={`/events/${reg.event_id}`}
-                          className="font-bold text-sm text-slate-900 dark:text-white hover:text-brand-600 transition-colors block line-clamp-1"
+                          className="font-bold text-sm text-neutral-900 dark:text-white hover:text-emerald-500 transition-colors block line-clamp-1"
                         >
                           {reg.event_title}
                         </Link>
-                        <span className="text-[10px] text-slate-400">Category: {reg.event_category || 'General'}</span>
+                        <span className="text-[10px] text-neutral-400">Category: {reg.event_category || 'General'}</span>
                       </td>
 
                       <td className="py-4 px-6">
-                        <span className="font-mono font-bold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/60 px-2 py-1 rounded">
+                        <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-1 rounded">
                           {reg.ticket_code}
                         </span>
                       </td>
 
-                      <td className="py-4 px-6 space-y-0.5 text-[11px] text-slate-500">
+                      <td className="py-4 px-6 space-y-0.5 text-[11px] text-neutral-500">
                         {reg.event_start_time && (
                           <p>
                             📅 {new Date(reg.event_start_time).toLocaleDateString('en-US', {
@@ -175,10 +173,10 @@ export const MyRegistrationsPage: React.FC = () => {
                           <>
                             <button
                               onClick={() => openQrModal(reg)}
-                              className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 font-semibold text-slate-800 dark:text-slate-200 transition-colors inline-flex items-center gap-1"
+                              className="px-3 py-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 font-semibold text-neutral-800 dark:text-neutral-200 transition-colors inline-flex items-center gap-1"
                             >
                               <QrCode className="w-3.5 h-3.5" />
-                              <span>QR Ticket</span>
+                              <span>View Pass</span>
                             </button>
 
                             <button
@@ -204,9 +202,9 @@ export const MyRegistrationsPage: React.FC = () => {
       <ConfirmationModal
         isOpen={cancelModalOpen}
         title="Cancel This Registration?"
-        message={`Are you sure you want to cancel your seat for "${selectedReg?.event_title}"? This ticket will be invalidated and the seat will be made available to other students.`}
+        message={`Are you sure you want to cancel your seat for "${selectedReg?.event_title}"? Your ticket will be invalidated and your seat will be returned to available capacity.`}
         confirmLabel="Yes, Release My Seat"
-        isDestructive={true}
+        confirmVariant="danger"
         isLoading={cancelling}
         onConfirm={confirmCancel}
         onCancel={() => setCancelModalOpen(false)}
@@ -214,11 +212,11 @@ export const MyRegistrationsPage: React.FC = () => {
 
       {/* QR Code Modal */}
       {qrModalOpen && selectedTicket && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
           <div className="relative">
             <button
               onClick={() => setQrModalOpen(false)}
-              className="absolute -top-3 -right-3 z-10 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-lg border border-slate-700"
+              className="absolute -top-3 -right-3 z-10 w-8 h-8 rounded-full bg-neutral-900 text-white flex items-center justify-center shadow-lg border border-neutral-700"
             >
               ✕
             </button>

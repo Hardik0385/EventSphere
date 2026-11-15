@@ -7,10 +7,10 @@ import {
   Clock, 
   ArrowLeft, 
   CheckCircle, 
-  ShieldCheck, 
   User as UserIcon,
   Ticket,
-  AlertCircle
+  AlertCircle,
+  Share2
 } from 'lucide-react';
 import { Event } from '@eventsphere/shared';
 import { api } from '../../lib/api';
@@ -111,9 +111,9 @@ export const EventDetailsPage: React.FC = () => {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 animate-pulse space-y-6">
-        <div className="h-6 w-32 bg-slate-200 dark:bg-slate-800 rounded" />
-        <div className="h-10 w-3/4 bg-slate-200 dark:bg-slate-800 rounded-lg" />
-        <div className="h-48 w-full bg-slate-200 dark:bg-slate-800 rounded-2xl" />
+        <div className="h-6 w-32 bg-neutral-200 dark:bg-neutral-800 rounded" />
+        <div className="h-10 w-3/4 bg-neutral-200 dark:bg-neutral-800 rounded-lg" />
+        <div className="h-48 w-full bg-neutral-200 dark:bg-neutral-800 rounded-2xl" />
       </div>
     );
   }
@@ -123,8 +123,8 @@ export const EventDetailsPage: React.FC = () => {
       <div className="max-w-xl mx-auto px-4 py-20 text-center">
         <AlertCircle className="w-12 h-12 text-rose-500 mx-auto mb-4" />
         <h2 className="text-2xl font-bold">Event Not Found</h2>
-        <p className="text-sm text-slate-500 mt-2 mb-6">The requested event does not exist or has been removed.</p>
-        <Link to="/events" className="px-5 py-2.5 rounded-xl bg-brand-600 text-white text-sm font-semibold">
+        <p className="text-sm text-neutral-500 mt-2 mb-6">The requested event does not exist or has been removed.</p>
+        <Link to="/events" className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-950 text-sm font-semibold">
           Back to Events
         </Link>
       </div>
@@ -142,83 +142,80 @@ export const EventDetailsPage: React.FC = () => {
       {/* Back button */}
       <Link
         to="/events"
-        className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+        className="inline-flex items-center gap-2 text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span>Back to Events Catalog</span>
+        <span>Back to Events</span>
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left 2 Cols: Main Info */}
         <div className="lg:col-span-2 space-y-6">
           <div className="space-y-3">
-            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border border-brand-200 dark:border-brand-800">
+            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/80">
               {event.category}
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
               {event.title}
             </h1>
-            <p className="text-xs text-slate-500 flex items-center gap-1.5">
-              <UserIcon className="w-3.5 h-3.5" /> Organized by{' '}
-              <span className="font-semibold text-slate-700 dark:text-slate-300">{event.organizer_name || 'EventSphere Host'}</span>
+            <p className="text-xs text-neutral-500 flex items-center gap-1.5">
+              <UserIcon className="w-3.5 h-3.5" /> Hosted by{' '}
+              <span className="font-semibold text-neutral-700 dark:text-neutral-300">{event.organizer_name || 'EventSphere Host'}</span>
             </p>
           </div>
 
           {/* Description */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">About This Event</h3>
-            <div className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+          <div className="bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-neutral-900 dark:text-white">About This Event</h3>
+            <div className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed whitespace-pre-line">
               {event.description}
             </div>
           </div>
 
-          {/* Cloud computing architecture note */}
-          <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-slate-700 dark:text-slate-300 flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold text-slate-900 dark:text-white mb-0.5">Cloudflare D1 Atomic Safeguard</p>
-              <p className="text-slate-600 dark:text-slate-400">
-                Registrations for this event are executed as atomic transactions across Cloudflare edge worker isolates. Double bookings are blocked at the relational constraint layer.
-              </p>
-            </div>
+          {/* Guaranteed Reservation Note */}
+          <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 text-xs text-neutral-600 dark:text-neutral-400 flex items-center gap-3">
+            <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0" />
+            <p>
+              <span className="font-semibold text-neutral-900 dark:text-white">Instant Confirmation:</span> Your digital ticket is issued immediately with unique pass verification for smooth on-site check-in.
+            </p>
           </div>
         </div>
 
-        {/* Right Col: Registration Card */}
+        {/* Right Col: Logistics & Action Card */}
         <div className="space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xl sticky top-24 space-y-5">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Event Logistics</h3>
+          <div className="bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-sm sticky top-24 space-y-5">
+            <h3 className="text-base font-bold text-neutral-900 dark:text-white">Date & Venue</h3>
 
-            <div className="space-y-3.5 text-xs text-slate-600 dark:text-slate-300">
-              <div className="flex items-start gap-2.5">
-                <Calendar className="w-4 h-4 text-brand-500 shrink-0 mt-0.5" />
+            <div className="space-y-4 text-xs text-neutral-600 dark:text-neutral-300">
+              <div className="flex items-start gap-3">
+                <Calendar className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-white">Date</p>
-                  <p>{startDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                  <p className="font-medium text-neutral-900 dark:text-white">Date</p>
+                  <p className="text-neutral-500 mt-0.5">{startDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-brand-500 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3">
+                <Clock className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-white">Time</p>
-                  <p>{startDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - {endDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
+                  <p className="font-medium text-neutral-900 dark:text-white">Time</p>
+                  <p className="text-neutral-500 mt-0.5">{startDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - {endDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-brand-500 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-white">Venue / Location</p>
-                  <p>{event.location}</p>
+                  <p className="font-medium text-neutral-900 dark:text-white">Location</p>
+                  <p className="text-neutral-500 mt-0.5">{event.location}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <Users className="w-4 h-4 text-brand-500 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3">
+                <Users className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-white">Capacity & Availability</p>
-                  <p className="font-medium text-brand-600 dark:text-brand-400">
+                  <p className="font-medium text-neutral-900 dark:text-white">Capacity</p>
+                  <p className="text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5">
                     {remaining} of {event.capacity} seats remaining
                   </p>
                 </div>
@@ -226,45 +223,52 @@ export const EventDetailsPage: React.FC = () => {
             </div>
 
             {/* Action buttons */}
-            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
+            <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800/80 space-y-2.5">
               {isRegistered ? (
-                <>
-                  <div className="flex items-center justify-center gap-2 p-3 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-xl text-xs font-semibold">
-                    <CheckCircle className="w-4 h-4 text-emerald-600" />
-                    <span>You are registered for this event!</span>
+                <div className="space-y-2">
+                  <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center justify-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-500" />
+                    <span>You're registered for this event!</span>
                   </div>
 
                   {generatedTicketCode && (
                     <button
                       onClick={() => setTicketModalOpen(true)}
-                      className="w-full py-3 px-4 rounded-xl text-xs font-bold text-white bg-brand-600 hover:bg-brand-500 shadow-md shadow-brand-500/20 flex items-center justify-center gap-2 transition-all"
+                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-emerald-500 hover:bg-emerald-400 text-neutral-950 shadow-sm transition-colors flex items-center justify-center gap-2"
                     >
                       <Ticket className="w-4 h-4" />
-                      <span>View Ticket & QR Code</span>
+                      <span>View Entry Ticket</span>
                     </button>
                   )}
 
                   <button
                     onClick={() => setCancelModalOpen(true)}
-                    className="w-full py-2.5 px-4 rounded-xl text-xs font-medium text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                    className="w-full py-2 rounded-xl text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
                   >
                     Cancel Registration
                   </button>
-                </>
+                </div>
               ) : isFull ? (
                 <button
                   disabled
-                  className="w-full py-3 px-4 rounded-xl text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 cursor-not-allowed text-center"
+                  className="w-full py-3 rounded-xl font-bold text-xs bg-neutral-200 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
                 >
-                  Registration Closed (Capacity Full)
+                  Event Fully Booked
                 </button>
               ) : (
                 <button
                   onClick={handleRegister}
                   disabled={registering}
-                  className="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 shadow-lg shadow-brand-500/25 transition-all hover:scale-[1.01]"
+                  className="w-full py-3 rounded-xl font-bold text-xs bg-emerald-500 hover:bg-emerald-400 text-neutral-950 shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/25 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  {registering ? 'Securing Seat in Cloud D1...' : 'Register for Event (Free)'}
+                  {registering ? (
+                    <span>Securing Ticket...</span>
+                  ) : (
+                    <>
+                      <Ticket className="w-4 h-4" />
+                      <span>Register for Free</span>
+                    </>
+                  )}
                 </button>
               )}
             </div>
@@ -274,32 +278,45 @@ export const EventDetailsPage: React.FC = () => {
 
       {/* Ticket QR Modal */}
       {ticketModalOpen && generatedTicketCode && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in">
-          <div className="relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-[#121215] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 max-w-sm w-full space-y-6 shadow-2xl">
+            <div className="text-center space-y-1">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400">
+                Official Entry Pass
+              </span>
+              <h3 className="text-lg font-bold text-neutral-900 dark:text-white truncate">
+                {event.title}
+              </h3>
+              <p className="text-xs text-neutral-500">{startDate.toLocaleDateString()}</p>
+            </div>
+
+            <div className="bg-neutral-50 dark:bg-neutral-900 p-4 rounded-2xl border border-neutral-200 dark:border-neutral-800 flex flex-col items-center justify-center">
+              <QrCodeViewer ticketCode={generatedTicketCode} eventTitle={event.title} />
+              <div className="mt-4 text-center">
+                <p className="text-[10px] uppercase font-semibold text-neutral-400">Pass Code</p>
+                <code className="text-xs font-mono font-bold tracking-wider text-neutral-900 dark:text-white">
+                  {generatedTicketCode}
+                </code>
+              </div>
+            </div>
+
             <button
               onClick={() => setTicketModalOpen(false)}
-              className="absolute -top-3 -right-3 z-10 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-lg border border-slate-700"
+              className="w-full py-2.5 rounded-xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-semibold text-xs hover:opacity-90 transition-opacity"
             >
-              ✕
+              Done
             </button>
-            <QrCodeViewer
-              ticketCode={generatedTicketCode}
-              eventTitle={event.title}
-              participantName={user?.name}
-              eventDate={startDate.toLocaleDateString()}
-              eventLocation={event.location}
-            />
           </div>
         </div>
       )}
 
-      {/* Cancel Confirmation Dialog */}
+      {/* Cancel Confirmation Modal */}
       <ConfirmationModal
         isOpen={cancelModalOpen}
-        title="Cancel Event Registration?"
-        message="Are you sure you want to cancel your registration? Your reserved seat will be immediately released for other participants in the Cloudflare D1 database."
+        title="Cancel Registration?"
+        message="Are you sure you want to cancel your registration? Your reserved seat will be immediately returned to available capacity."
         confirmLabel="Yes, Cancel Registration"
-        isDestructive={true}
+        confirmVariant="danger"
         onConfirm={handleCancelRegistration}
         onCancel={() => setCancelModalOpen(false)}
       />
