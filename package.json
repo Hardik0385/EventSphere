@@ -1,0 +1,28 @@
+{
+  "name": "event-sphere",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EventSphere - Serverless Event Management Platform powered by Cloudflare Workers, Pages, and D1",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@eventsphere/worker & npm run dev --workspace=@eventsphere/web",
+    "dev:worker": "npm run dev --workspace=@eventsphere/worker",
+    "dev:web": "npm run dev --workspace=@eventsphere/web",
+    "build": "npm run build --workspace=@eventsphere/shared && npm run build --workspace=@eventsphere/worker && npm run build --workspace=@eventsphere/web",
+    "build:shared": "npm run build --workspace=@eventsphere/shared",
+    "build:worker": "npm run build --workspace=@eventsphere/worker",
+    "build:web": "npm run build --workspace=@eventsphere/web",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "d1:migrate:local": "npm run d1:migrate:local --workspace=@eventsphere/worker",
+    "d1:seed:local": "npm run d1:seed:local --workspace=@eventsphere/worker"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "wrangler": "^3.109.2"
+  }
+}

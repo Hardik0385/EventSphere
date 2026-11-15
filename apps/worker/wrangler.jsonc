@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "eventsphere-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "eventsphere-db",
+      "database_id": "eventsphere-local-db",
+      "migrations_dir": "../../migrations"
+    }
+  ],
+  "vars": {
+    "ENVIRONMENT": "development",
+    "CORS_ORIGIN": "http://localhost:5173",
+    "JWT_SECRET": "eventsphere-local-super-secret-jwt-key-minimum-32-chars-long",
+    "ADMIN_BOOTSTRAP_SECRET": "eventsphere-admin-bootstrap-dev-token"
+  }
+}
